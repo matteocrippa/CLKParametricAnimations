@@ -7,6 +7,8 @@ Pod::Spec.new do |s|
   s.author           = { "tsheaff" => "tyler@clinkle.com" }
   s.source           = { :git => "https://github.com/Clinkle/CLKParametricAnimations.git", :tag => s.version.to_s }
 
+  s.frameworks = 'QuartzCore', 'CoreGraphics'
+
   s.platform     = :ios, '7.0'
   s.requires_arc = true
   s.source_files = 'Pod/Classes'
