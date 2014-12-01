@@ -168,6 +168,7 @@ const ParametricTimeBlock kParametricTimeBlockSquashedSineInOut = ^(double time)
 };
 
 #define kDefaultElasticPeriod 0.3
+#define kMutedElasticPeriod 0.5
 #define kDefaultElasticAmplitude 1.0
 #define kDefaultElasticShiftRatio 0.25
 const ParametricTimeBlock kParametricTimeBlockElasticIn = ^(double time) {
@@ -186,21 +187,29 @@ const ParametricTimeBlock kParametricTimeBlockElasticIn = ^(double time) {
 
     return result;
 };
+
 const ParametricTimeBlock kParametricTimeBlockElasticOut = ^(double time) {
-    if (time <= 0.0) {
-        return 0.0;
-    }
-    if (time >= 1.0) {
-        return 1.0;
-    }
-    double period = kDefaultElasticPeriod;
-    double amplitude = kDefaultElasticAmplitude;
-    double shift = period * kDefaultElasticShiftRatio;
+    return kParametricTimeBlockVariableElasticOut(kDefaultElasticPeriod)(time);
+};
 
-    double result = amplitude * pow(2, -10 * time) * // amplitude decay
-    sin((time - shift) * 2 * M_PI / period) + 1;
+const ParametricTimeBlock (^kParametricTimeBlockVariableElasticOut)(double) = ^(double inverseIntensity) {
+    ParametricTimeBlock elasticOut = ^(double time) {
+        if (time <= 0.0) {
+            return 0.0;
+        }
+        if (time >= 1.0) {
+            return 1.0;
+        }
+        double period = inverseIntensity;
+        double amplitude = kDefaultElasticAmplitude;
+        double shift = period * kDefaultElasticShiftRatio;
 
-    return result;
+        double result = amplitude * pow(2, -10 * time) * // amplitude decay
+        sin((time - shift) * 2 * M_PI / period) + 1;
+
+        return result;
+    };
+    return elasticOut;
 };
 
 + (ParametricTimeBlock)elasticParametricTimeBlockWithEaseIn:(BOOL)easeIn

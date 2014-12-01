@@ -93,6 +93,8 @@ extern const ParametricTimeBlock kParametricTimeBlockExpoInOut;
 extern const ParametricTimeBlock kParametricTimeBlockElasticIn;
 extern const ParametricTimeBlock kParametricTimeBlockElasticOut;
 
+extern const ParametricTimeBlock (^kParametricTimeBlockVariableElasticOut)(double inverseIntensity);
+
 
 #pragma mark - value blocks
 
