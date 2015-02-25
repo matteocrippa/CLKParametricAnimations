@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/Clinkle/CLKParametricAnimations"
   s.license          = 'MIT'
   s.author           = { "tsheaff" => "tyler@clinkle.com" }
-  s.source           = { :git => "git://github.com/Clinkle/CLKParametricAnimations.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/Clinkle/CLKParametricAnimations.git", :tag => s.version.to_s }
 
   s.frameworks = 'QuartzCore', 'CoreGraphics'
 
